@@ -42,4 +42,35 @@ export default defineEventHandler(async (event) => {
       statusMessage: `Google Places error: ${data.status}`,
     });
   }
+
+  //transform Google response into handyman shape
+  const handymen: Handyman[] = (data.result ?? []).map((place: any) => ({
+    id: place.place_id,
+    name: place.name,
+    address: place.vicinity,
+    city: "", // Google Places doesn't provide city directly
+    state: "", // Google Places doesn't provide state directly
+    latitude: place.geometry.location.lat,
+    longitude: place.geometry.location.lng,
+    rating: place.rating,
+    reviewCount: place.user_ratings_total,
+    photoUrl: place.photos?.[0]?.photo_reference
+      ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${config.googlePlacesApiKey}`
+      : undefined,
+    skills: [],
+    specialties: [], // Google Places doesn't provide specialties directly
+    availability: "available",
+    languages: ["Spanish", "English"], // Default languages
+    isVerified: false, // Default to false
+  }));
+
+  // send back the response in the shape of SearchResponse
+  const result: SearchResponse = {
+    handymen,
+    totalResults: data.results.length,
+    page: 1, // Google Places API doesn't provide pagination info in this endpoint
+    totalPages: 1, // Google Places API doesn't provide pagination info in this endpoint
+  };
+
+  return result;
 });

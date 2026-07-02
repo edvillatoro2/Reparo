@@ -12,6 +12,11 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
+  //API keys live here, server ones stay secret
+  runtimeConfig: {
+    googlePlacesApiKey: process.env.GOOGLE_PLACES_API_KEY,
+  }
+
   // Tells Vite to pre-bundle these packages so the dev server
   // doesn't restart every time you open the app
   vite: {

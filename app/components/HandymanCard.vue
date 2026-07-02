@@ -1,6 +1,5 @@
 <template>
   <div class="card">
-
     <!-- Photo or placeholder -->
     <div class="card-photo">
       <img
@@ -13,7 +12,6 @@
 
     <!-- Info -->
     <div class="card-body">
-
       <h3 class="card-name">{{ handyman.name }}</h3>
       <p class="card-address">📍 {{ handyman.address }}</p>
 
@@ -36,24 +34,23 @@
       </div>
 
       <!-- Phone -->
-      
+      <a
         v-if="handyman.phone"
         :href="`tel:${handyman.phone}`"
         class="card-call"
       >
         📞 {{ handyman.phone }}
       </a>
-
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Handyman } from "~/types";
-defineProps<{
-    handyman: Handyman
-}>()
 
+defineProps<{
+  handyman: Handyman;
+}>();
 </script>
 
 <style scoped>

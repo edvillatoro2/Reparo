@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
   }
 
   //transform Google response into handyman shape
-  const handymen: Handyman[] = (data.result ?? []).map((place: any) => ({
+  const handymen: Handyman[] = (data.results ?? []).map((place: any) => ({
     id: place.place_id,
     name: place.name,
     address: place.vicinity,
@@ -52,6 +52,7 @@ export default defineEventHandler(async (event) => {
     state: "", // Google Places doesn't provide state directly
     latitude: place.geometry.location.lat,
     longitude: place.geometry.location.lng,
+    phone: place.international_phone_number,
     rating: place.rating,
     reviewCount: place.user_ratings_total,
     photoUrl: place.photos?.[0]?.photo_reference
@@ -59,7 +60,7 @@ export default defineEventHandler(async (event) => {
       : undefined,
     skills: [],
     specialties: [], // Google Places doesn't provide specialties directly
-    availability: "available",
+    availability: "available" as const, // Default to available
     languages: ["Spanish", "English"], // Default languages
     isVerified: false, // Default to false
   }));
@@ -67,7 +68,7 @@ export default defineEventHandler(async (event) => {
   // send back the response in the shape of SearchResponse
   const result: SearchResponse = {
     handymen,
-    totalResults: data.results.length,
+    totalResults: handymen.length,
     page: 1, // Google Places API doesn't provide pagination info in this endpoint
     totalPages: 1, // Google Places API doesn't provide pagination info in this endpoint
   };

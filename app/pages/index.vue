@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- hero section -->
-    <section class="hero">
+    <section class="hero bg-sand">
       <div class="hero-inner">
         <h1 class="text-4xl font-bold text-red-600">
           Find the best handymen in your area that speak your language and are

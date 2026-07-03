@@ -3,7 +3,7 @@
     <!-- hero section -->
     <section class="hero">
       <div class="hero-inner">
-        <h1 class="hero-title">
+        <h1 class="text-4xl font-bold text-red-600">
           Find the best handymen in your area that speak your language and are
           available when you need them.
         </h1>

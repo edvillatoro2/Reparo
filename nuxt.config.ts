@@ -1,11 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
+
   // Enables Nuxt 4 features
   future: {
     compatibilityVersion: 4,
   },
+
   devtools: { enabled: true },
+
   // TypeScript strict mode — catches mistakes before they become bugs
   typescript: {
     strict: true,
@@ -24,4 +27,6 @@ export default defineNuxtConfig({
       include: ["@vue/devtools-core", "@vue/devtools-kit"],
     },
   },
+
+  modules: ["@nuxtjs/tailwindcss"],
 });

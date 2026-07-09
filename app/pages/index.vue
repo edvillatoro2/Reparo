@@ -2,7 +2,7 @@
   <div>
     <!-- hero section -->
     <section
-      class="min-h-screen bg-sand flex flex-col justify-center px-8 md:px-16 lg:px-24"
+      class="h-full bg-sand flex flex-col justify-center px-8 md:px-16 lg:px-24"
     >
       <div class="max-w-4xl">
         <!-- label -->
@@ -63,31 +63,36 @@
     </section>
 
     <!-- results section -->
-    <section class="results">
-      <div class="results-inner">
+    <section class="bg-sand/50 px-8 md:px-16 lg:px-24 py-16">
+      <div class="max-w-7xl mx-auto">
         <!-- loading message -->
-        <div v-if="loading" class="status-msg">
-          Searching for handyman services...
+        <div v-if="loading" class="flex items-center justify-center py-24">
+          <p class="text-dark/50 text-lg animate-pulse">
+            Searching for handymen near you...
+          </p>
         </div>
         <!-- error from API -->
-        <div v-else-if="error" class="error-msg">
-          {{ error }}
+        <div v-else-if="error" class="flex items-center justify-center py-24">
+          <p class="text-red-500">{{ error }}</p>
         </div>
         <!-- no results message -->
         <div
           v-else-if="hasSearched && handymen.length === 0"
-          class="status-msg"
+          class="text-center py-24"
         >
-          No handyman services found in your area. Try increasing your search
-          radius.
+          <p class="text-dark/50 text-lg">
+            No handyman services found in your area. Try increasing your search
+            radius.
+          </p>
         </div>
         <!-- results list -->
         <template v-else-if="hasSearched">
-          <div class="results-count">
-            Found {{ totalResults }} handyman services within
-            {{ radius }} miles.
-          </div>
-          <div class="result-grid">
+          <p class="text-dark/50 text-sm uppercase tracking-widest mb-8">
+            {{ totalResults }} professionals found near you
+          </p>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
             <HandymanCard
               v-for="handyman in handymen"
               :key="handyman.id"
@@ -95,6 +100,12 @@
             />
           </div>
         </template>
+        <!-- initial state -->
+        <div v-else class="text-center py-24">
+          <p class="text-dark/40 text-lg">
+            Enter a service above and click Find Near Me
+          </p>
+        </div>
       </div>
     </section>
   </div>

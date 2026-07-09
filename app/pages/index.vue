@@ -1,45 +1,65 @@
 <template>
   <div>
     <!-- hero section -->
-    <section class="hero bg-sand">
-      <div class="hero-inner">
-        <h1 class="text-4xl font-bold text-red-600">
-          Find the best handymen in your area that speak your language and are
-          available when you need them.
-        </h1>
-        <p class="hero-sub">
-          Trusted, verified, and highly rated professionals ready to help you
-          with your home improvement needs
+    <section
+      class="min-h-screen bg-sand flex flex-col justify-center px-8 md:px-16 lg:px-24"
+    >
+      <div class="max-w-4xl">
+        <!-- label -->
+        <p
+          class="text-caramel uppercase tracking-widest text-sm font-semibold mb-4"
+        >
+          / Hablamos Español /
         </p>
-        <p>* Hablamos Español! *</p>
-      </div>
 
-      <!-- search bar -->
-      <div class="search-bar">
-        <input
-          v-model="keyword"
-          class="search-input"
-          placeholder="Search for handyman services..."
-          @keydown.enter="handleSearch"
-        />
-        <select v-model="radius" class="search-select">
-          <option value="5">5 miles</option>
-          <option value="10">10 miles</option>
-          <option value="25">25 miles</option>
-          <option value="50">50 miles</option>
-        </select>
-        <button class="search-btn" @click="handleSearch">
-          {{
-            geoLoading
-              ? "Detecting Location..."
-              : loading
-              ? "Searching..."
-              : "Find Near Me"
-          }}
-        </button>
+        <!-- main heading -->
+        <h1 class="text-6xl md:text-8xl font-bold text-dark leading-none mb-6">
+          FIND THE<br />
+          BEST<br />
+          HANDYMAN<sup class="text-3xl">®</sup>
+        </h1>
+
+        <!-- subheading -->
+        <p class="text-dark/60 text-lg max-w-md mb-10">
+          Trusted, verified Latino professionals ready to help with your home —
+          available when you need them.
+        </p>
+
+        <!-- search bar -->
+        <div class="flex flex-col sm:flex-row gap-3 max-w-xl">
+          <input
+            v-model="keyword"
+            class="flex-1 px-5 py-4 rounded-full bg-white/70 text-dark placeholder-dark/40 outline-none focus:ring-2 focus:ring-caramel text-sm"
+            placeholder="plumbing, painting, electrical..."
+            @keydown.enter="handleSearch"
+          />
+          <select
+            v-model="radius"
+            class="px-5 py-4 rounded-full bg-white/70 text-dark outline-none focus:ring-2 focus:ring-caramel text-sm cursor-pointer"
+          >
+            <option value="5">5 miles</option>
+            <option value="10">10 miles</option>
+            <option value="25">25 miles</option>
+            <option value="50">50 miles</option>
+          </select>
+          <button
+            class="px-8 py-4 rounded-full bg-dark text-sand font-semibold text-sm hover:bg-terra transition-colors duration-200 whitespace-nowrap disabled:opacity-50"
+            :disabled="geoLoading || loading"
+            @click="handleSearch"
+          >
+            {{
+              geoLoading
+                ? "Detecting..."
+                : loading
+                ? "Searching..."
+                : "Find Near Me"
+            }}
+          </button>
+        </div>
+
+        <!-- geo error -->
+        <p v-if="geoError" class="text-red-500 text-sm mt-3">{{ geoError }}</p>
       </div>
-      <!-- Geolocation error message -->
-      <p v-if="geoError" class="error-msg">{{ geoError }}</p>
     </section>
 
     <!-- results section -->

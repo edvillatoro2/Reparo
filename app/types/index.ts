@@ -2,6 +2,7 @@ export interface Handyman {
   id: string;
   name: string;
   email?: string;
+  website?: string;
   phone?: string;
   address: string;
   city: string;

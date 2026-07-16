@@ -31,6 +31,10 @@ export default defineEventHandler(async (event) => {
   url.searchParams.set("keyword", `${keyword} contratista latino`);
   url.searchParams.set("type", "general_contractor");
   url.searchParams.set("key", config.googlePlacesApiKey);
+  url.searchParams.set(
+    "fields",
+    "name,place_id,rating,user_ratings_total,geometry,photos,vicinity,international_phone_number,opening_hours,website",
+  );
 
   //call google places
   const response = await fetch(url.toString());
@@ -53,6 +57,7 @@ export default defineEventHandler(async (event) => {
     latitude: place.geometry.location.lat,
     longitude: place.geometry.location.lng,
     phone: place.international_phone_number,
+    website: place.website,
     rating: place.rating,
     reviewCount: place.user_ratings_total,
     photoUrl: place.photos?.[0]?.photo_reference

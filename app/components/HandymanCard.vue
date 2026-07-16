@@ -60,6 +60,15 @@
       >
         📞 {{ handyman.phone }}
       </a>
+      <!-- website button -->
+      <a
+        v-if="handyman.website"
+        :href="handyman.website"
+        target="_blank"
+        class="mt-2 block text-center py-3 rounded-full bg-dark text-sand text-sm font-semibold hover:bg-terra transition-colors duration-200"
+      >
+        🌐 Visit Website
+      </a>
       <div
         v-else
         class="mt-2 py-3 rounded-full bg-sand text-dark/40 text-sm text-center"

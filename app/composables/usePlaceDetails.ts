@@ -12,7 +12,7 @@ export const usePlaceDetails = () => {
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  const fetchData = async (placeId: string) => {
+  const fetch = async (placeId: string) => {
     loading.value = true;
     error.value = null;
 
@@ -34,5 +34,5 @@ export const usePlaceDetails = () => {
     details.value = null;
   };
 
-  return { details, loading, error, fetchData, clear };
+  return { details, loading, error, fetch, clear };
 };

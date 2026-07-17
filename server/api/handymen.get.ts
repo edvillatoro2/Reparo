@@ -39,6 +39,7 @@ export default defineEventHandler(async (event) => {
   //call google places
   const response = await fetch(url.toString());
   const data = await response.json();
+  console.log("Sample place fields:", Object.keys(data.results?.[0] ?? {}));
 
   if (data.status !== "OK" && data.status !== "ZERO_RESULTS") {
     throw createError({

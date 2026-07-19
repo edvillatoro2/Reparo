@@ -14,10 +14,4 @@
   margin: 0;
   padding: 0;
 }
-
-body {
-  font-family: "Inter", system-ui, sans-serif;
-  background-color: #e4d1b9;
-  color: #2c1a0e;
-}
 </style>

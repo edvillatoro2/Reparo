@@ -2,7 +2,7 @@
   <div>
     <!-- hero section -->
     <section
-      class="h-full bg-sand flex flex-col justify-center px-8 md:px-16 lg:px-24"
+      class="min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24"
     >
       <div class="max-w-4xl">
         <!-- label -->

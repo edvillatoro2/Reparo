@@ -14,7 +14,11 @@
         v-else
         class="w-full h-full flex items-center justify-center text-5xl"
       >
-        🔨
+        <img
+          src="https://placehold.co/800/black/white?text=No+Image+Provided&font=playfair-display"
+          alt="placeholder"
+          class="w-full h-full object-cover"
+        />
       </div>
 
       <!-- availability badge -->

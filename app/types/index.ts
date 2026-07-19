@@ -43,4 +43,5 @@ export interface SearchResponse {
   totalResults: number;
   page: number;
   totalPages: number;
+  nextPageToken: string | null;
 }

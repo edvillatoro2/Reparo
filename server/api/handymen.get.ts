@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
   const lng = parseFloat(query.lng as string);
   const radius = parseInt((query.radius as string) ?? "10");
   const keyword = (query.keyword as string) ?? "handyman";
+  const pageToken = (query.pageToken as string) ?? null;
 
   //if no request was sent, reject the request
   if (isNaN(lat) || isNaN(lng)) {
@@ -26,15 +27,23 @@ export default defineEventHandler(async (event) => {
   const url = new URL(
     "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
   );
-  url.searchParams.set("location", `${lat}, ${lng}`);
-  url.searchParams.set("radius", String(radiusMeters));
-  url.searchParams.set("keyword", `${keyword} contratista latino`);
-  url.searchParams.set("type", "general_contractor");
+
+  // if pageToken, use it instead of location/radius
+  //google requires this for pagination
+  if (pageToken) {
+    url.searchParams.set("pagetoken", pageToken);
+  } else {
+    url.searchParams.set("location", `${lat}, ${lng}`);
+    url.searchParams.set("radius", String(radiusMeters));
+    url.searchParams.set("keyword", `${keyword} contratista latino`);
+    url.searchParams.set("type", "general_contractor");
+    url.searchParams.set(
+      "fields",
+      "name,place_id,rating,user_ratings_total,geometry,photos,vicinity,international_phone_number,opening_hours,website",
+    );
+  }
+
   url.searchParams.set("key", config.googlePlacesApiKey);
-  url.searchParams.set(
-    "fields",
-    "name,place_id,rating,user_ratings_total,geometry,photos,vicinity,international_phone_number,opening_hours,website",
-  );
 
   //call google places
   const response = await fetch(url.toString());
@@ -77,6 +86,7 @@ export default defineEventHandler(async (event) => {
     totalResults: handymen.length,
     page: 1, // Google Places API doesn't provide pagination info in this endpoint
     totalPages: 1, // Google Places API doesn't provide pagination info in this endpoint
+    nextPageToken: data.next_page_token ?? null,
   };
 
   return result;

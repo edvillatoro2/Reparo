@@ -88,8 +88,9 @@
         <!-- results list -->
         <template v-else-if="hasSearched">
           <p class="text-dark/50 text-sm uppercase tracking-widest mb-8">
-            {{ totalResults }} professionals found near you
+            {{ handymen.length }} professionals found · Page {{ currentPage }}
           </p>
+
           <div
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
@@ -98,6 +99,29 @@
               :key="handyman.id"
               :handyman="handyman"
             />
+          </div>
+
+          <!-- pagination -->
+          <div class="flex items-center justify-center gap-4 mt-12">
+            <button
+              class="px-6 py-3 rounded-full border border-dark/20 text-dark text-sm font-semibold hover:bg-sand transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+              :disabled="currentPage === 1 || loading"
+              @click="prevPage"
+            >
+              ← Previous
+            </button>
+
+            <span class="text-dark/50 text-sm">
+              Page {{ currentPage }} of {{ totalPages }}
+            </span>
+
+            <button
+              class="px-6 py-3 rounded-full bg-dark text-sand text-sm font-semibold hover:bg-terra transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+              :disabled="!nextPageToken || loading"
+              @click="nextPage"
+            >
+              {{ loading ? "Loading..." : "Next →" }}
+            </button>
           </div>
         </template>
         <!-- initial state -->
@@ -120,8 +144,19 @@ const {
   error: geoError,
   detect,
 } = useGeolocation();
-const { handymen, loading, error, hasSearched, totalResults, search } =
-  useHandymen();
+const {
+  handymen,
+  loading,
+  error,
+  hasSearched,
+  totalResults,
+  currentPage,
+  totalPages,
+  nextPageToken,
+  search,
+  nextPage,
+  prevPage,
+} = useHandymen();
 
 // search filter state
 const keyword = ref("");
